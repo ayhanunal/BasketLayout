@@ -18,6 +18,11 @@ if (maxBasketLimit == null) {
   setLoading()
 }
 ```
+```kotlin
+findViewById<BasketLayoutView>(R.id.basketView).apply {
+  this.setMaxBasketLimit(5)
+}
+```
 <p align="center">
   <img src="https://github.com/ayhanunal/BasketLayout/blob/master/art/max_limit_alert.png" width=300 height=600>
 </p>
