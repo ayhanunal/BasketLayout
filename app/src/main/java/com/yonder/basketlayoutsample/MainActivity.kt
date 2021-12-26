@@ -12,7 +12,10 @@ class MainActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_main)
+
+
     findViewById<BasketLayoutView>(R.id.basketView).apply {
+      this.setMaxBasketLimit(5)
       setBasketLayoutListener(object : BasketLayoutViewListener {
         override fun onClickDecreaseQuantity(quantity: Int) {
           Toast.makeText(this@MainActivity, "Decrease quantity to $quantity", Toast.LENGTH_SHORT)
@@ -34,9 +37,14 @@ class MainActivity : AppCompatActivity() {
           Toast.makeText(this@MainActivity, "on Click Trash Button", Toast.LENGTH_SHORT)
             .show()
         }
+
+        override fun maxLimitExceeded() {
+          Toast.makeText(this@MainActivity, "Maximum Limit Exceeded!!", Toast.LENGTH_SHORT)
+            .show()
+        }
       })
-
-
     }
+
+
   }
 }

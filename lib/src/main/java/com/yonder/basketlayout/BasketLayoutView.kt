@@ -47,6 +47,12 @@ class BasketLayoutView @JvmOverloads constructor(
   val padding = 16.toPx.toInt()
   var isAddedViews: Boolean = false
 
+  private var maxBasketLimit: Int? = null
+
+  fun setMaxBasketLimit(maxBasketLimit: Int){
+    //other conditions
+    this.maxBasketLimit = maxBasketLimit
+  }
 
   private val clContainer: ConstraintLayout by lazy {
     ConstraintLayout(context).apply {
@@ -79,8 +85,18 @@ class BasketLayoutView @JvmOverloads constructor(
       background = null
       setOnClickListener {
         if (state == State.None) {
-          listener?.onClickIncreaseQuantity(quantity + incrementValue)
-          setLoading()
+          maxBasketLimit?.let {
+            if ((quantity + incrementValue) > it){
+              listener?.maxLimitExceeded()
+            }else{
+              listener?.onClickIncreaseQuantity(quantity + incrementValue)
+              setLoading()
+            }
+          }
+          if (maxBasketLimit == null) {
+            listener?.onClickIncreaseQuantity(quantity + incrementValue)
+            setLoading()
+          }
         }
       }
       setColorFilter(ContextCompat.getColor(context, R.color.green))
